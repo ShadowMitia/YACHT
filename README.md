@@ -16,7 +16,7 @@ The folders are arranged in the following way (following the [pitchfork template
 * **./src/**: The sources and includes for the code.
 
 Be advised:
-The docker container in this template is not secure due to the use of volumes, etc... 
+The docker container in this template is not secure due to the use of volumes, etc...
 It is intended to be used as a cleanroom environment, to make sure it works in well known and defined environment.
 
 GL&HF.
@@ -27,12 +27,12 @@ The code was written to work with Visual Studio 2019, but it could be made to wo
 For this, simply open Visual Studio 2019, and select the "clone from repository" option when asked which project to open.
 Then, give it the HTTPS url from this repository (use the clone button above), and a destination path (it might ask you to login to the repository).
 
-Once it is downloaded, you can then open the CMakeLists.txt, so that Visual Studio notices the cmake file. And then select the Profiling compilation option on the compilation bar, with the desired executable (drop down arrow, then choose: `simulate.exe`, `train_cmaes.exe`, ...), and press the play button.
+Once it is downloaded, you can then open the CMakeLists.txt, so that Visual Studio notices the cmake file. And then select the Profiling compilation option on the compilation bar, with the desired executable, and press the play button.
 
 This will then compile the code for the desired executable, and then start said executable.
 
 # Unix (Ubuntu) setup
-The code is written to work in cmake, this means it is rather trivial to export to a Unix platform.
+The code is written to work in cmake, this means it can be compiled on a Unix platform.
 
 ### Prerequisites
 To use this in ubuntu 16.04, the following prerequisites are needed before you can ```git clone``` and compile:
@@ -43,27 +43,22 @@ sudo apt-get install -y build-essential cmake git
 ### Clone & compile
 Start in the desired directory, with a ```git clone``` command, followed by the HTTPS url from this repository (use the clone button above), and press enter. Then once the clone is complete, enter the new directory created by git.
 
-The compilation is done using the **./debug.sh** & **./release.sh** scripts, which compiles the code in the **./src/** folder, to the **./build/** folder.
+The compilation is done using the **./build.sh** script, which compiles the code in the **./src/** folder, to the **./build/** folder.
 
-* **./debug.sh** is used when trying to debug errors in the program. It calls the compilation with the Debug target, designed for optimal debugging and safe guards, at the cost of higher compute time.
-* **./release.sh** is used when training and normal usage. It calls the compilation with the Release target, designed for minimum computation time, at the cost of harder debugging and no safe guards.
+* **./build.sh -h** will show a help page.
+* **./build.sh** is used in dev environment. It calls the compilation with the RelWithDebInfo target, designed for minimum computation time, while preserving debug information and safe guards.
+* **./build.sh -d** is used when trying to debug errors in the program. It calls the compilation with the Debug target, designed for optimal debugging and safe guards, at the cost of higher compute time.
+* **./build.sh -m** is used to generate the smallest executable possible. It calls the compilation with the MinSizeRel target, designed for minimum size.
+* **./build.sh -r** is used in normal usage. It calls the compilation with the Release target, designed for minimum computation time, at the cost of harder debugging and no safe guards.
+* **./build.sh -c** will clean the build folder for the desired target, and the compile the target.
+* **./build.sh TARGET** will only compile the given target. If the target is "clean" then it will only clean the build folder, and exit.
 
-To compile the code run the desired script. e.g.:
+If needed, you may also chain some flags. e.g. clean the folder, then compile in release mode, the target called MyExec:
 ```bash
-./release.sh
+./build.sh -r -c MyExec
 ```
 
-Additionally you may add the target name, in order to only compile a single executable of the code. e.g.:
-```bash
-./debug.sh train
-```
-
-If needed, you may also call the clean target, to make clean and recreate Cmake configs. e.g.:
-```bash
-./profiling.sh clean
-```
-
-The number of CPUs used in the compilation is determined automatically, but limited by default to 8 threads. This is to avoid out of memory issues when running on low memory machines. This can be increased in the `unix_compile.config` file:
+The number of CPUs used in the compilation is determined automatically, but can be limited. This is to avoid out of memory issues when running on low memory machines. This can be enabled in the `unix_compile.config` file:
 ```
 # Define the max number of jobs. Care must be taken, a too high value could
 #   cause an out of memory error.

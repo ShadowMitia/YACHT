@@ -1,0 +1,89 @@
+#!/bin/bash
+
+compile() {
+    source unix_compile.config
+    build_type=$1 # Debug or Release
+    target_name=$2
+
+    target_arg=""
+    if [ -n "$2" ]; then
+        target_arg="--target target_name"
+    fi
+
+    # define build_path, but append Docker_ if it is run in a docker container
+    build_path="./build/"
+    if [ -n "${DOCKER}" ]; then
+        build_path="${build_path}Docker_"
+    fi
+
+    # build path if not existing
+    build_path="${build_path}${build_type}${3}"
+    if [ ! -d "${build_path}" ]; then
+        mkdir -p "${build_path}"
+    fi
+
+    # if you asked for clean, then remove all the files
+    if [ "${target_name,,}" == "clean" ]; then
+        rm -rf "${build_path}"
+        return
+    fi
+
+    n_jobs=$(grep -c ^processor /proc/cpuinfo) # get cpu count
+    if [ -z "$max_jobs" ]; then
+        max_jobs="$n_jobs"
+    fi
+    if [ "$n_jobs" -gt "$max_jobs" ]; then # clip the cpu count, otherwise compilation memory might explode
+        n_jobs="$max_jobs"
+    fi
+
+    # if a compiler has been defined, use the given compiler. Otherwise let CMake decide.
+    c_compilation_flag=""
+    if [ -n "$c_compiler" ]; then
+        if ! hash "$c_compiler" 2>/dev/null; then
+            echo "ERROR: the requested C compiler $c_compiler was not found. Halting..."
+            exit 1
+        fi
+        c_compilation_flag="-D CMAKE_C_COMPILER=$c_compiler"
+    fi
+    cpp_compilation_flag=""
+    if [ -n "$cpp_compiler" ]; then
+        if ! hash "$cpp_compiler" 2>/dev/null; then
+            echo "ERROR: the requested C++ compiler $cpp_compiler was not found. Halting..."
+            exit 1
+        fi
+        cpp_compilation_flag="-D CMAKE_CXX_COMPILER=$cpp_compiler"
+    fi
+    builder="make"
+    cmake_builder_flag=""
+    if [ -n "$build_system" ]; then
+        if ! hash "$build_system" 2>/dev/null; then
+            echo "ERROR: the requested build system $build_system was not found. Halting..."
+            exit 1
+        fi
+        if [ "$build_system" == "ninja" ]; then
+            cmake_builder_flag="-GNinja"
+        fi
+        builder="$build_system"
+    fi
+
+    echo "============================="
+    echo "building ${build_type} target"
+    echo "============================="
+    echo
+
+    source_dir=$(pwd)
+    pushd "${build_path}" &>/dev/null || exit 1
+    echo "=========== CMake ==========="
+    cmake "${cmake_builder_flag}" "${c_compilation_flag}" "${cpp_compilation_flag}" "${target_arg}" -D CMAKE_BUILD_TYPE="${build_type}" -DASAN="${ASAN}" -DCPP_CHECK="${CPP_CHECK}" "${source_dir}" && \
+    echo && \
+    echo "=========== ${builder} ============" && \
+    ${builder} -j"${n_jobs}" ${target_name}
+    # save the error code if one occured.
+    error_code=$?
+    popd &>/dev/null || exit 1
+
+    # propagate the error out if an error code occured.
+    if [ $error_code -ne 0 ]; then
+        exit $error_code
+    fi
+}

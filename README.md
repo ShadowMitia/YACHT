@@ -1,4 +1,4 @@
-# Cpp base project
+# YACHT: Yet Another Cpp Helper Template
 ## A template for c++ projects.
 
 [![Language](https://img.shields.io/badge/language-C++-blue.svg)](https://isocpp.org/)

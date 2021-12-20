@@ -74,7 +74,7 @@ compile() {
     source_dir=$(pwd)
     pushd "${build_path}" &>/dev/null || exit 1
     echo "=========== CMake ==========="
-    cmake "${cmake_builder_flag}" "${c_compilation_flag}" "${cpp_compilation_flag}" "${target_arg}" -D CMAKE_BUILD_TYPE="${build_type}" -DASAN="${ASAN}" -DCPP_CHECK="${CPP_CHECK}" "${source_dir}" && \
+    cmake "${cmake_builder_flag}" "${c_compilation_flag}" "${cpp_compilation_flag}" "${target_arg}" -D CMAKE_BUILD_TYPE="${build_type}" "${source_dir}" && \
     echo && \
     echo "=========== ${builder} ============" && \
     ${builder} -j"${n_jobs}" ${target_name}

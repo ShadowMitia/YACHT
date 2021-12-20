@@ -1,0 +1,12 @@
+// Enable address sanitizer.
+ASAN=OFF
+
+// Enable Cpp Check, if available.
+CPP_CHECK=OFF
+
+// Enable Clang tidy, if available.
+CLANG_TIDY=OFF
+
+// Enable Include-what-you-use, if available.
+INCLUDE_WHAT_YOU_USE=OFF
+

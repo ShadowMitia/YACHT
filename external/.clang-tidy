@@ -1,0 +1,6 @@
+---
+# Here to disable clang-tidy on any external projects.
+Checks: '-*,misc-definitions-in-headers'
+CheckOptions:
+  - { key: HeaderFileExtensions,          value: "x" }
+...

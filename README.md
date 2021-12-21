@@ -19,8 +19,10 @@ Be advised:
 The docker container in this template is not secure due to the use of volumes, etc...
 It is intended to be used as a cleanroom environment, to make sure it works in well known and defined environment.
 
-This template also has `clang-tidy`, `cppcheck`, & `clang-format` scripts and configs. If you wish to use them, you can enable `clang-tidy` & `cppcheck` in the `./unix_compile.config` file in the root directory, but they will only work if they are installed on your machine (otherwise, a warning will be emmited).
+This template also has `clang-tidy`, `cppcheck`, & `clang-format` scripts and configs. If you wish to use them, you can enable `clang-tidy` & `cppcheck` in the `./CMakeCache.txt` file in the root directory, but they will only work if they are installed on your machine (otherwise, a warning will be emmited).
 While `clang-format` is used with the `./format.sh` script in the root directory, when executed it will run `clang-format` over all the files in the **./src/**, **./lib/**, & **./include/** directories, which will format them inplace using the included format file `./.clang-format`.
+
+If you wish to use the [Conan package manager](https://conan.io/center/) with this template, you need to have python installed with pip (`apt-get install python3 python3-pip` in ubuntu, or from [the python website](https://www.python.org/) for windows and set 'add python to Environment variable' during installation), and then run `pip3 install conan` in your terminal.
 
 GL&HF.
 

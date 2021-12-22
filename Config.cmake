@@ -12,4 +12,10 @@ set_option(INCLUDE_WHAT_YOU_USE OFF)
 
 # Use Conan package manager
 set_option(CONAN OFF)
-set_option(VERBOSE_CONAN OFF)
+set_option(CONAN_VERBOSE OFF)
+
+# Use vcpkg package manager
+set_option(VCPKG OFF)
+set_option(VCPKG_VERBOSE OFF)
+set_option(VCPKG_LOCATION "")
+set_option(VCPKG_LOCAL_DOWNLOAD OFF) # will download in ./build/ directory

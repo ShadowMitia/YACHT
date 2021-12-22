@@ -1,4 +1,5 @@
-option(CONAN "use Conan package manager" OFF)
+option(CONAN "Use Conan package manager" OFF)
+option(CONAN_VERBOSE "Make Conan verbose when downloading and installing packages" OFF)
 
 if (CONAN)
 		if (MSVC AND CMAKE_CXX_STANDARD STREQUAL "11")
@@ -20,7 +21,7 @@ if (CONAN)
 		include(${PROJECT_SOURCE_DIR}/build/conan.cmake)
 
 		# adding remotes, in case the wrong ones are installed.
-		conan_add_remote(NAME cci URL https://center.conan.io INDEX 0)
+		conan_add_remote(NAME conancenter URL https://center.conan.io INDEX 0)
 		conan_add_remote(NAME bincrafters URL https://bincrafters.jfrog.io/artifactory/api/conan/public-conan)
 
 		message(STATUS "Using Conan")
@@ -32,7 +33,7 @@ if (CONAN)
 			conan_cmake_autodetect(settings)
 
 			set(is_quiet "OUTPUT_QUIET")
-			if(VERBOSE_CONAN)
+			if(CONAN_VERBOSE)
 				set(is_quiet "")
 			endif()
 
@@ -42,7 +43,7 @@ if (CONAN)
 
 			conan_cmake_install(PATH_OR_REFERENCE "${CONAN_GET_FROM_FILE_PATH}"
 													BUILD missing
-													REMOTE conancenter
+													REMOTE conancenter bincrafters
 													SETTINGS ${settings}
 													${is_quiet})
 
@@ -59,7 +60,7 @@ if (CONAN)
 	        endforeach()
 
 			conan_cmake_configure(REQUIRES ${CONAN_GET_PACKAGE_PACKAGE}
-														GENERATORS cmake cmake_find_package)
+														GENERATORS cmake cmake_find_package_multi)
 
 			conan_get_from_file(PATH ".")
 		endmacro()

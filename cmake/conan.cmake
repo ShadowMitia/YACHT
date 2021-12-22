@@ -19,6 +19,12 @@ if (CONAN)
 
 		include(${PROJECT_SOURCE_DIR}/build/conan.cmake)
 
+		# adding remotes, in case the wrong ones are installed.
+		conan_add_remote(NAME cci URL https://center.conan.io INDEX 0)
+		conan_add_remote(NAME bincrafters URL https://bincrafters.jfrog.io/artifactory/api/conan/public-conan)
+
+		message(STATUS "Using Conan")
+
 		macro(conan_get_from_file)
 			set(oneValueArgs PATH)
 			cmake_parse_arguments(CONAN_GET_FROM_FILE "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN} )
@@ -47,6 +53,10 @@ if (CONAN)
 		macro(conan_get_package)
 		    set(multiValueArgs PACKAGE)
 		    cmake_parse_arguments(CONAN_GET_PACKAGE "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN} )
+
+			foreach(pkg ${CONAN_GET_PACKAGE_PACKAGE})
+	            MESSAGE(STATUS "Getting package ${pkg} from Conan...")
+	        endforeach()
 
 			conan_cmake_configure(REQUIRES ${CONAN_GET_PACKAGE_PACKAGE}
 														GENERATORS cmake cmake_find_package)

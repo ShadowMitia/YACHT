@@ -11,5 +11,5 @@ set_option(CLANG_TIDY OFF)
 set_option(INCLUDE_WHAT_YOU_USE OFF)
 
 # Use Conan package manager
-set_option(CONAN ON)
+set_option(CONAN OFF)
 set_option(VERBOSE_CONAN OFF)

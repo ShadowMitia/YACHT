@@ -6,9 +6,9 @@ project(Cpp_base_project
     VERSION 1.0.0
     LANGUAGES CXX C)
 set(CMAKE_CXX_STANDARD 11)
-load_cache(${PROJECT_SOURCE_DIR})
 
 ### TOOLS ###
+include(${PROJECT_SOURCE_DIR}/cmake/load_config.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/asan.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/cppcheck.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/clang_tidy.cmake)

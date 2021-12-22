@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 
 int main() {
     std::cout << "Hello Cpp base project.\n";

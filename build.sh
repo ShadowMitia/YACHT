@@ -8,9 +8,9 @@ build_type=RelWithDebInfo
 while test $# -gt 0; do
   case "$1" in
     -h|--help)
-      echo "build.sh - Builds the source with cmake and make"
+      echo "build.sh - Builds the source with cmake and make."
       echo " "
-      echo "./build.sh [-r|--release] [-d|--debug] [-c|--clean] target"
+      echo "./build.sh [-h|--help] [-r|--release] [-d|--debug] [-c|--clean] TARGET"
       echo " "
       echo "options:"
       echo "  -h, --help                show brief help"
@@ -53,4 +53,3 @@ if [ -n "$clean" ]; then
 fi
 
 compile ${build_type} "${target}"
-

@@ -6,9 +6,13 @@ project(Cpp_base_project
     VERSION 1.0.0
     LANGUAGES CXX C)
 set(CMAKE_CXX_STANDARD 11)
-include(${PROJECT_SOURCE_DIR}/cmake/flags.cmake) # will containe most default flags
-include(${PROJECT_SOURCE_DIR}/cmake/asan.cmake) 
+
+### TOOLS ###
+include(${PROJECT_SOURCE_DIR}/cmake/load_config.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/asan.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/cppcheck.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/clang_tidy.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/include_what_you_use.cmake)
 
 # customizable flags for each build and compiler.
 #set_flag(COMPILER clang gnu intel TARGET release relwithdebinfo FLAGS -O3 -march=native)
@@ -16,6 +20,7 @@ include(${PROJECT_SOURCE_DIR}/cmake/cppcheck.cmake)
 #set_flag(COMPILER msvc FLAGS /openmp)
 #set_flag(COMPILER clang FLAGS -stdlib=libc++)
 
+### SOURCE & INCLUDES ###
 include_directories("${PROJECT_SOURCE_DIR}/src")
 #add_subdirectory("${PROJECT_SOURCE_DIR}/src")
 

@@ -8,4 +8,4 @@ set_option(CPP_CHECK OFF)
 set_option(CLANG_TIDY OFF)
 
 # Enable Include-what-you-use, if available.
-set_option(INCLUDE_WHAT_YOU_USE ON)
+set_option(INCLUDE_WHAT_YOU_USE OFF)

@@ -10,6 +10,9 @@ set_option(CLANG_TIDY OFF)
 # Enable Include-what-you-use, if available.
 set_option(INCLUDE_WHAT_YOU_USE OFF)
 
+# Enable google Gtest testing platform.
+set_option(GTEST ON)
+
 # Use Conan package manager
 set_option(CONAN OFF)
 set_option(CONAN_VERBOSE OFF)

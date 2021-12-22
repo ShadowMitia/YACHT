@@ -34,7 +34,7 @@ fi
 for path in "./src/" "./include/" "./libs/"
 do
    if [ -d "${path}" ]; then
-       find "${path}" \( -name "*.c" -o -name "*.cc" -o -name "*.cpp"  -o -name "*.h" -o -name "*.hpp" -o -name "*.ipp" \) | \
+       find "${path}" \( -name "*.c" -o -name "*.cc" -o -name "*.cpp"  -o -name "*.h" -o -name "*.hpp" -o -name "*.ipp" \) -print0 | \
        xargs -I % sh -c "${format_command}"
    fi
 done

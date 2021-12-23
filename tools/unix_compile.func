@@ -84,7 +84,7 @@ compile() {
     cmake "${cmake_builder_flag}" "${c_compilation_flag}" "${cpp_compilation_flag}" "${target_arg}" -D CMAKE_BUILD_TYPE="${build_type}" "${source_dir}" && \
     echo && \
     echo "=========== ${builder} ============" && \
-    ${builder} -j"${n_jobs}" ${target_name} && eval ${run_tests}
+    ${builder} -j"${n_jobs}" ${target_name} && eval "${run_tests}"
     # save the error code if one occured.
     error_code=$?
     popd &>/dev/null || exit 1

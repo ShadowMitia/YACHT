@@ -40,7 +40,6 @@ if (GTEST)
             # Alias the target names, as an installed Gtest lib is not named the same way as a subdir Gtest lib...
             add_library(GTest::GTest ALIAS gtest)
             add_library(GTest::Main ALIAS gtest_main)
-            add_library(GTest::GMock ALIAS gmock)
 
             # avoid compiling if not testing
             set_target_properties(gtest PROPERTIES EXCLUDE_FROM_ALL TRUE)
@@ -58,7 +57,7 @@ if (GTEST)
         message(STATUS "Added Gtest test: ${GTEST_ADD_TEST_NAME}")
         add_executable(${GTEST_ADD_TEST_NAME} EXCLUDE_FROM_ALL ${GTEST_ADD_TEST_SOURCES})
         add_dependencies(build_tests ${GTEST_ADD_TEST_NAME})
-        target_link_libraries(${GTEST_ADD_TEST_NAME} GTest::GTest GTest::GMock ${lib_main_gtest})
+        target_link_libraries(${GTEST_ADD_TEST_NAME} GTest::GTest ${lib_main_gtest})
         add_test(${GTEST_ADD_TEST_NAME} ${GTEST_ADD_TEST_NAME})
     endmacro()
 

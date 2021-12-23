@@ -43,4 +43,5 @@ add_executable(main "src/main.cpp")
 
 ### TESTS ###
 gtest_add_test(NAME gtest_example SOURCES ./tests/gtest_example.cpp)
+catch2_add_test(NAME catch2_example SOURCES ./tests/catch2_example.cpp)
 # target_link_libraries(gtest_example Eigen3::Eigen) # you can link targets from the {NAME}_add_test functions

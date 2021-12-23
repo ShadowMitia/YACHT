@@ -1,0 +1,6 @@
+include(${PROJECT_SOURCE_DIR}/cmake/asan.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/cppcheck.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/clang_tidy.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/include_what_you_use.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/gtest.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/catch2.cmake)

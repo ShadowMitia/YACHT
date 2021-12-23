@@ -9,11 +9,7 @@ set(CMAKE_CXX_STANDARD 11)
 
 ### TOOLS ###
 include(${PROJECT_SOURCE_DIR}/cmake/load_config.cmake)
-include(${PROJECT_SOURCE_DIR}/cmake/asan.cmake)
-include(${PROJECT_SOURCE_DIR}/cmake/cppcheck.cmake)
-include(${PROJECT_SOURCE_DIR}/cmake/clang_tidy.cmake)
-include(${PROJECT_SOURCE_DIR}/cmake/include_what_you_use.cmake)
-include(${PROJECT_SOURCE_DIR}/cmake/gtest.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/load_tools.cmake)
 
 ### COMPILER FLAG MANAGER ###
 include(${PROJECT_SOURCE_DIR}/cmake/flags.cmake) # will containe most default flags

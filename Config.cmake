@@ -11,7 +11,9 @@ set_option(CLANG_TIDY OFF)
 set_option(INCLUDE_WHAT_YOU_USE OFF)
 
 # Enable google Gtest testing platform.
-set_option(GTEST ON)
+set_option(GTEST OFF)
+set_option(GTEST_DOWNLOAD_IF_MISSING OFF)
+
 
 # Use Conan package manager
 set_option(CONAN OFF)

@@ -1,9 +1,22 @@
 # YACHT: Yet Another Cpp Helper Template
 ## A template for c++ projects.
 
-[![Language](https://img.shields.io/badge/language-C++-blue.svg)](https://isocpp.org/)
+[![Language](https://img.shields.io/badge/language-C++-blue.svg)](https://isocpp.org/) ![GitHub repo size](https://img.shields.io/github/repo-size/ShadowMitia/YACHT)
 
-Dev setup:
+Welcome to your YACHT! Because why build a boat from scratch, when you can enjoy a more comfortable and stylish way of sailing, with a YACHT.
+
+YACHT is a C/C++ project template based on CMake. It's goal is to avoid boilerplate CMake code, when trying to add extra features to your project. It uses a "pay for what you use" style of implementation, meaning it has a very small file size and does not generate file for features you didn't ask for.
+
+It has support for:
+* Easy compiler flag & feature configuration
+* Linters and formatting tools: `clang-tidy`, `cppcheck`, `include-what-you-use`, & `clang-format`
+* Testing libraries: `GTest` & `Catch2`
+* Package managers: `Conan` & `vcpkg`
+* Multiplatform "get up and go" support for: Unix `Make`, `Ninja`, & Windows `Visual Studio` 2015 and up
+* Dev perks: `Docker`, a fully featured `./build.sh` script, a predefined `.gitignore`, & a pre setup folder structure.
+Being based on CMake, it also allows you to continue to use your custom `.cmake` scripts and to alter any parts of the `CMakeLists.txt` with little interference.
+
+### Dev setup:
 
 You need to change the name of the project in:
 * CMakeLists.txt:L.5
@@ -14,6 +27,9 @@ The folders are arranged in the following way (following the [pitchfork template
 * **./docs/**: Is for documentation or for images used in markdown files.
 * **./external/**: Is for external code, i.e. external libs.
 * **./src/**: The sources and includes for the code.
+* **./tests/**: The sources and includes for the tests.
+
+### Dev Readme:
 
 Be advised:
 The docker container in this template is not secure due to the use of volumes, etc...

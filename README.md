@@ -14,6 +14,7 @@ It has support for:
 * Package managers: `Conan` & `vcpkg`
 * Multiplatform "get up and go" support for: Unix `Make`, `Ninja`, & Windows `Visual Studio` 2015 and up
 * Dev perks: `Docker`, a fully featured `./build.sh` script, a predefined `.gitignore`, & a pre setup folder structure.
+
 Being based on CMake, it also allows you to continue to use your custom `.cmake` scripts and to alter any parts of the `CMakeLists.txt` with little interference.
 
 ### Dev setup:

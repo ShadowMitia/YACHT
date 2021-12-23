@@ -3,6 +3,7 @@ option(GTEST_DOWNLOAD_IF_MISSING "download & build google Gtest if no existing b
 
 if (GTEST)
     enable_testing()
+    include(${PROJECT_SOURCE_DIR}/cmake/test_helper.cmake)
     message(STATUS "Using Gtest")
 
     macro(gtest_add_test)
@@ -39,7 +40,13 @@ if (GTEST)
             # Alias the target names, as an installed Gtest lib is not named the same way as a subdir Gtest lib...
             add_library(GTest::GTest ALIAS gtest)
             add_library(GTest::Main ALIAS gtest_main)
-            add_library(GTest::GMock ALIAS gtest_main)
+            add_library(GTest::GMock ALIAS gmock)
+
+            # avoid compiling if not testing
+            set_target_properties(gtest PROPERTIES EXCLUDE_FROM_ALL TRUE)
+            set_target_properties(gtest_main PROPERTIES EXCLUDE_FROM_ALL TRUE)
+            set_target_properties(gmock PROPERTIES EXCLUDE_FROM_ALL TRUE)
+            set_target_properties(gmock_main PROPERTIES EXCLUDE_FROM_ALL TRUE)
         endif()
 
         # add GTest main if the user has not requested NO_MAIN
@@ -49,7 +56,8 @@ if (GTEST)
         endif()
 
         message(STATUS "Added Gtest test: ${GTEST_ADD_TEST_NAME}")
-        add_executable(${GTEST_ADD_TEST_NAME} ${GTEST_ADD_TEST_SOURCES})
+        add_executable(${GTEST_ADD_TEST_NAME} EXCLUDE_FROM_ALL ${GTEST_ADD_TEST_SOURCES})
+        add_dependencies(build_tests ${GTEST_ADD_TEST_NAME})
         target_link_libraries(${GTEST_ADD_TEST_NAME} GTest::GTest GTest::GMock ${lib_main_gtest})
         add_test(${GTEST_ADD_TEST_NAME} ${GTEST_ADD_TEST_NAME})
     endmacro()

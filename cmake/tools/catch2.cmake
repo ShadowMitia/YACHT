@@ -3,7 +3,7 @@ option(CATCH2_DOWNLOAD_IF_MISSING "download & build Catch2 if no existing build 
 
 if (CATCH2)
     enable_testing()
-    include(${PROJECT_SOURCE_DIR}/cmake/test_helper.cmake)
+    include(${PROJECT_SOURCE_DIR}/cmake/tools/test_helper.cmake)
     message(STATUS "Using Catch2")
 
     macro(catch2_add_test)

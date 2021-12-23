@@ -3,7 +3,7 @@ option(GTEST_DOWNLOAD_IF_MISSING "download & build google Gtest if no existing b
 
 if (GTEST)
     enable_testing()
-    include(${PROJECT_SOURCE_DIR}/cmake/test_helper.cmake)
+    include(${PROJECT_SOURCE_DIR}/cmake/tools/test_helper.cmake)
     message(STATUS "Using Gtest")
 
     macro(gtest_add_test)

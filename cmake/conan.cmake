@@ -48,7 +48,7 @@ if (CONAN)
 													${is_quiet})
 
 			include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-			conan_basic_setup(TARGETS)
+			conan_basic_setup(TARGETS NO_OUTPUT_DIRS)
 		endmacro()
 
 		macro(conan_get_package)

@@ -25,5 +25,5 @@ set_option(CONAN_VERBOSE OFF)
 # Use vcpkg package manager
 set_option(VCPKG OFF)
 set_option(VCPKG_VERBOSE OFF)
-set_option(VCPKG_LOCATION "")
+set_option_path(VCPKG_LOCATION "~/vcpkg/")
 set_option(VCPKG_LOCAL_DOWNLOAD OFF) # will download in ./build/ directory

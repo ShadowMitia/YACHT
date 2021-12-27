@@ -44,9 +44,11 @@ if (VCPKG)
     endif()
 
     # make sure the address for vcpkg is sane
-    if (NOT EXISTS "${VCPKG_LOCATION}")
-        MESSAGE(FATAL_ERROR "Could not find vcpkg directory ${VCPKG_LOCATION}. Halting...")
+    find_program(VCPKG_CMD "vcpkg" HINTS "${VCPKG_LOCATION}")
+    if (NOT VCPKG_CMD)
+        MESSAGE(FATAL_ERROR "Could not find vcpkg in the directory \"${VCPKG_LOCATION}\". Halting...")
     endif()
+    message(STATUS "Found vcpkg.")
 
     # include scripting stuff for vcpkg
     include("${VCPKG_LOCATION}/scripts/buildsystems/vcpkg.cmake")
@@ -65,7 +67,7 @@ if (VCPKG)
 
         foreach(pkg ${VCPKG_GET_PACKAGE_PACKAGE})
             MESSAGE(STATUS "Getting package ${pkg} from vcpkg...")
-            execute_process(COMMAND ./vcpkg install ${pkg}
+            execute_process(COMMAND ${VCPKG_CMD} install ${pkg}
                             WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/build/vcpkg/"
                             RESULT_VARIABLE ret
                             ${is_quiet})

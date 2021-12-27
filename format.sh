@@ -27,14 +27,25 @@ while test $# -gt 0; do
 done
 
 if ! hash clang-format 2>/dev/null; then
-    echo "ERROR: clang-format is not installed on this machine, cannot use it to format code. Halting..."
+    echo "'clang-format' is not installed on this machine, cannot use it to format code. Halting..."
+    if hash apt 2>/dev/null; then # if apt is install, give a suggestion about how to install clang-format
+        echo "It can be installed with:"
+        echo ""
+        echo "sudo apt install clang-format"
+        echo ""
+    else
+        echo "It can install it from LLVM's tools:"
+        echo ""
+        echo "https://releases.llvm.org/download.html"
+        echo ""
+    fi
     exit 1
 fi
 
 for path in "./src/" "./include/" "./libs/"
 do
    if [ -d "${path}" ]; then
-       find "${path}" \( -name "*.c" -o -name "*.cc" -o -name "*.cpp"  -o -name "*.h" -o -name "*.hpp" -o -name "*.ipp" \) -print0 | \
+       find "${path}" \( -name "*.c" -o -name "*.cc" -o -name "*.cpp"  -o -name "*.h" -o -name "*.hpp" -o -name "*.ipp" \) -print | \
        xargs -I % sh -c "${format_command}"
    fi
 done

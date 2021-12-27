@@ -1,16 +1,10 @@
-option(GTEST "use google Gtest testing platform" OFF)
 option(GTEST_DOWNLOAD_IF_MISSING "download & build google Gtest if no existing build has been found" OFF)
 
-if (GTEST)
-    enable_testing()
-    include(${PROJECT_SOURCE_DIR}/cmake/tools/test_helper.cmake)
-    message(STATUS "Using Gtest")
-
-    macro(gtest_add_test)
-        set(options NO_MAIN)
-        set(oneValueArgs NAME)
-        set(multiValueArgs SOURCES)
-        cmake_parse_arguments(GTEST_ADD_TEST "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN} )
+macro(gtest_find)
+    if (NOT gtest_was_found)
+        message(STATUS "GTest was requested. Setting up...")
+        enable_testing()
+        include(${PROJECT_SOURCE_DIR}/cmake/tools/test_helper.cmake)
 
         set(find_gtest_cond "REQUIRED")
         if (GTEST_DOWNLOAD_IF_MISSING)
@@ -40,6 +34,8 @@ if (GTEST)
             # Alias the target names, as an installed Gtest lib is not named the same way as a subdir Gtest lib...
             add_library(GTest::GTest ALIAS gtest)
             add_library(GTest::Main ALIAS gtest_main)
+            add_library(GTest::gmock ALIAS gmock)
+            add_library(GTest::gmock_main ALIAS gmock_main)
 
             # avoid compiling if not testing
             set_target_properties(gtest PROPERTIES EXCLUDE_FROM_ALL TRUE)
@@ -48,20 +44,29 @@ if (GTEST)
             set_target_properties(gmock_main PROPERTIES EXCLUDE_FROM_ALL TRUE)
         endif()
 
-        # add GTest main if the user has not requested NO_MAIN
-        set(lib_main_gtest "GTest::Main")
-        if (GTEST_ADD_TEST_NO_MAIN)
-            set(lib_main_gtest "")
-        endif()
+        message(STATUS "Using Gtest")
 
-        message(STATUS "Added Gtest test: ${GTEST_ADD_TEST_NAME}")
-        add_executable(${GTEST_ADD_TEST_NAME} EXCLUDE_FROM_ALL ${GTEST_ADD_TEST_SOURCES})
-        add_dependencies(build_tests ${GTEST_ADD_TEST_NAME})
-        target_link_libraries(${GTEST_ADD_TEST_NAME} GTest::GTest ${lib_main_gtest})
-        add_test(${GTEST_ADD_TEST_NAME} ${GTEST_ADD_TEST_NAME})
-    endmacro()
+        set(gtest_was_found ON)
+    endif()
+endmacro()
 
-else()
-    macro(gtest_add_test)
-    endmacro()
-endif()
+macro(gtest_add_test)
+    set(options NO_MAIN)
+    set(oneValueArgs NAME)
+    set(multiValueArgs SOURCES)
+    cmake_parse_arguments(GTEST_ADD_TEST "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN} )
+
+    gtest_find()
+
+    # add GTest main if the user has not requested NO_MAIN
+    set(lib_main_gtest "GTest::Main;GTest::gmock_main")
+    if (GTEST_ADD_TEST_NO_MAIN)
+        set(lib_main_gtest "")
+    endif()
+
+    message(STATUS "Added Gtest test: ${GTEST_ADD_TEST_NAME}")
+    add_executable(${GTEST_ADD_TEST_NAME} EXCLUDE_FROM_ALL ${GTEST_ADD_TEST_SOURCES})
+    add_dependencies(build_tests ${GTEST_ADD_TEST_NAME})
+    target_link_libraries(${GTEST_ADD_TEST_NAME} GTest::GTest GTest::gmock ${lib_main_gtest})
+    add_test(${GTEST_ADD_TEST_NAME} ${GTEST_ADD_TEST_NAME} --gtest_color=yes)
+endmacro()

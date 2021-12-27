@@ -14,19 +14,15 @@ set_option(INCLUDE_WHAT_YOU_USE OFF)
 set_option(CCACHE OFF)
 
 # Enable google Gtest testing platform.
-set_option(GTEST OFF)
 set_option(GTEST_DOWNLOAD_IF_MISSING OFF)
 
 # Enable Catch2 testing platform.
-set_option(CATCH2 OFF)
 set_option(CATCH2_DOWNLOAD_IF_MISSING OFF)
 
 # Use Conan package manager
-set_option(CONAN OFF)
 set_option(CONAN_VERBOSE OFF)
 
 # Use vcpkg package manager
-set_option(VCPKG OFF)
 set_option(VCPKG_VERBOSE OFF)
 set_option_path(VCPKG_LOCATION "~/vcpkg/")
 set_option(VCPKG_LOCAL_DOWNLOAD OFF) # will download in ./build/ directory

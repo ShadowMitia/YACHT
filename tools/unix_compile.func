@@ -72,7 +72,7 @@ compile() {
     run_tests=""
     if [ "$target_name" == "test" ]; then
         target_name="build_tests"
-        run_tests="echo && echo '=========== Tests ============' &&  ${builder} test"
+        run_tests="echo && echo '=========== Tests ============' &&  ${builder} run_tests"
     fi
 
     echo "============================="

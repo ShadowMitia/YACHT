@@ -23,6 +23,9 @@ This template also has `clang-tidy`, `cppcheck`, `include-what-you-use`, & `clan
 If you wish to use them, you can enable `clang-tidy`, `cppcheck`, & `include-what-you-use` in the `./Config.cmake` file in the root directory, but they will only work if they are installed on your machine (otherwise, a warning will be emitted). A word of caution, enabling or disabling these features might cause CMake to recompile the entire project.
 `clang-format` however is used with the `./format.sh` script in the root directory, when executed it will run `clang-format` over all the files in the **./src/**, **./lib/**, & **./include/** directories, which will format them in place using the included format file `./.clang-format`.
 
+If you wish to use the [Conan package manager](https://conan.io/center/) with this template, you need to have python installed with pip (`apt-get install python3 python3-pip` in ubuntu, or from [the python website](https://www.python.org/) for windows and set 'add python to PATH' during the installation), and then run `pip3 install conan` in your terminal.
+In addition vcpkg is available and is compatible with Conan. You will need to [install vcpkg manually](https://vcpkg.io/en/getting-started.html), then set the install directory in by setting `VCPKG_LOCATION` in `./Config.cmake` (RECOMMENDED), or you can let cmake download into build folder by setting `VCPKG_LOCAL_DOWNLOAD` to `ON` in `./Config.cmake` (slower than preinstalling, needs zip in linux and git in linux and windows).
+
 GL&HF.
 
 # Windows setup

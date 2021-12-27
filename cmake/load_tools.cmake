@@ -1,5 +1,6 @@
 include(${PROJECT_SOURCE_DIR}/cmake/tools/asan.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/tools/catch2.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/tools/ccache.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/tools/clang_tidy.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/tools/conan.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/tools/cppcheck.cmake)

@@ -10,6 +10,9 @@ set_option(CLANG_TIDY OFF)
 # Enable Include-what-you-use, if available.
 set_option(INCLUDE_WHAT_YOU_USE OFF)
 
+# Enable Ccache, if available.
+set_option(CCACHE OFF)
+
 # Enable google Gtest testing platform.
 set_option(GTEST OFF)
 set_option(GTEST_DOWNLOAD_IF_MISSING OFF)

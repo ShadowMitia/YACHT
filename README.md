@@ -1,9 +1,23 @@
 # YACHT: Yet Another Cpp Helper Template
 ## A template for c++ projects.
 
-[![Language](https://img.shields.io/badge/language-C++-blue.svg)](https://isocpp.org/)
+[![Language](https://img.shields.io/badge/language-C++-blue.svg)](https://isocpp.org/) ![GitHub repo size](https://img.shields.io/github/repo-size/ShadowMitia/YACHT)
 
-Dev setup:
+Welcome to your YACHT! Because why build a boat from scratch, when you can enjoy a more comfortable and stylish way of sailing, with a YACHT.
+
+YACHT is a C/C++ project template based on CMake. It's goal is to avoid boilerplate CMake code, when trying to add extra features to your project. It uses a "pay for what you use" style of implementation, meaning it has a very small file size and does not generate file for features you didn't ask for.
+
+It has support for:
+* Easy compiler flag & feature configuration
+* Linters and formatting tools: `clang-tidy`, `cppcheck`, `include-what-you-use`, & `clang-format`
+* Testing libraries: `GTest` & `Catch2`
+* Package managers: `Conan` & `vcpkg`
+* Multiplatform "get up and go" support for: Unix `Make`, `Ninja`, & Windows `Visual Studio` 2015 and up
+* Dev perks: `Docker`, a fully featured `./build.sh` script, a predefined `.gitignore`, & a pre setup folder structure.
+
+Being based on CMake, it also allows you to continue to use your custom `.cmake` scripts and to alter any parts of the `CMakeLists.txt` with little interference.
+
+### Dev setup:
 
 You need to change the name of the project in:
 * CMakeLists.txt:L.5
@@ -14,6 +28,9 @@ The folders are arranged in the following way (following the [pitchfork template
 * **./docs/**: Is for documentation or for images used in markdown files.
 * **./external/**: Is for external code, i.e. external libs.
 * **./src/**: The sources and includes for the code.
+* **./tests/**: The sources and includes for the tests.
+
+### Dev Readme:
 
 Be advised:
 The docker container in this template is not secure due to the use of volumes, etc...
@@ -25,6 +42,8 @@ If you wish to use them, you can enable `clang-tidy`, `cppcheck`, & `include-wha
 
 If you wish to use the [Conan package manager](https://conan.io/center/) with this template, you need to have python installed with pip (`apt-get install python3 python3-pip` in ubuntu, or from [the python website](https://www.python.org/) for windows and set 'add python to PATH' during the installation), and then run `pip3 install conan` in your terminal.
 In addition vcpkg is available and is compatible with Conan. You will need to [install vcpkg manually](https://vcpkg.io/en/getting-started.html), then set the install directory in by setting `VCPKG_LOCATION` in `./Config.cmake` (RECOMMENDED), or you can let cmake download into build folder by setting `VCPKG_LOCAL_DOWNLOAD` to `ON` in `./Config.cmake` (slower than preinstalling, needs zip in linux and git in linux and windows).
+
+For tests, you can use the included `Catch2` and/or `GTest` library interfaces. For this, configure your `./Config.cmake` file to enable them, and then you can modify `CMakeLists.txt` to add you test sources to the desired testing library. The tests can be compiled and run using the make target `run_test` (or `./build.sh test`). If you do not have `Catch2` and/or `GTest` installed (either using a package manager, or on your machine), you can set the flag `{NAME}_DOWNLOAD_IF_MISSING`, which lets the builder download a local version of the library.
 
 GL&HF.
 

@@ -15,17 +15,19 @@ compile() {
     if [ -n "${DOCKER}" ]; then
         build_path="${build_path}Docker_"
     fi
-
-    # build path if not existing
     build_path="${build_path}${build_type}${3}"
-    if [ ! -d "${build_path}" ]; then
-        mkdir -p "${build_path}"
-    fi
 
     # if you asked for clean, then remove all the files
     if [ "${target_name,,}" == "clean" ]; then
-        rm -rf "${build_path}"
+        if [ -d "${build_path}" ]; then
+            rm -rf "${build_path}"
+        fi
         return
+    fi
+
+    # create build path if it does not exist
+    if [ ! -d "${build_path}" ]; then
+        mkdir -p "${build_path}"
     fi
 
     n_jobs=$(grep -c ^processor /proc/cpuinfo) # get cpu count
@@ -66,6 +68,13 @@ compile() {
         builder="$build_system"
     fi
 
+    # if we ask for test, we need to build first, then we can run tests
+    run_tests=""
+    if [ "$target_name" == "test" ]; then
+        target_name="build_tests"
+        run_tests="echo && echo '=========== Tests ============' &&  ${builder} run_tests"
+    fi
+
     echo "============================="
     echo "building ${build_type} target"
     echo "============================="
@@ -77,7 +86,7 @@ compile() {
     cmake "${cmake_builder_flag}" "${c_compilation_flag}" "${cpp_compilation_flag}" "${target_arg}" -D CMAKE_BUILD_TYPE="${build_type}" "${source_dir}" && \
     echo && \
     echo "=========== ${builder} ============" && \
-    ${builder} -j"${n_jobs}" ${target_name}
+    ${builder} -j"${n_jobs}" ${target_name} && eval "${run_tests}"
     # save the error code if one occured.
     error_code=$?
     popd &>/dev/null || exit 1

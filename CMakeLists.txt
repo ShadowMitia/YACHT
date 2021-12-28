@@ -29,17 +29,6 @@ include(${PROJECT_SOURCE_DIR}/cmake/flags.cmake) # will containe most default fl
 ### LIBS ###
 # find_package(Eigen3 CONFIG REQUIRED)
 
-### CONAN PACKAGE MANAGER ###
-#conan_get_from_file() # you can load from a conanfile.txt or conanfile.py in the root directory.
-#conan_get_package(PACKAGE gtest/1.11.0 eigen/3.4.0) # or directly from cmake
-
-### VCPKG PACKAGE MANAGER ###
-#vcpkg_get_package(PACKAGE Gtest Eigen3) # you can load packages directly from cmake.
-
-### LIBS ###
-#find_package(GTest CONFIG REQUIRED)
-#find_package(Eigen3 CONFIG REQUIRED)
-
 ### SOURCE & INCLUDES ###
 include_directories("${PROJECT_SOURCE_DIR}/src")
 # add_subdirectory("${PROJECT_SOURCE_DIR}/src")

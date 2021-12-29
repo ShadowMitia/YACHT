@@ -46,4 +46,4 @@ add_executable(main "src/main.cpp")
 # target_link_libraries(gtest_example PRIVATE Eigen3::Eigen) # you can link targets from the {NAME}_add_test functions. But they need to be PUBLIC|PRIVATE|INTERFACE.
 
 ### FUZZING ###
-libfuzz_add_test(NAME libfuzz_example SOURCES ./tests/fuzz_examples/libfuzz_example.cpp ARGS -max_total_time=10)
+# libfuzz_add_test(NAME libfuzz_example SOURCES ./tests/fuzz_examples/libfuzz_example.cpp ARGS -max_total_time=10)

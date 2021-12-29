@@ -10,6 +10,7 @@ set(CMAKE_CXX_STANDARD 11)
 ### TOOLS ###
 include(${PROJECT_SOURCE_DIR}/cmake/load_config.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/load_tools.cmake)
+# add_compile_commands_json()
 
 ### COMPILER FLAG MANAGER ###
 include(${PROJECT_SOURCE_DIR}/cmake/flags.cmake) # will containe most default flags
@@ -42,4 +43,4 @@ add_executable(main "src/main.cpp")
 ### TESTS ###
 # gtest_add_test(NAME gtest_example SOURCES ./tests/test_examples/gtest_example.cpp)
 # catch2_add_test(NAME catch2_example SOURCES ./tests/test_examples/catch2_example.cpp)
-# target_link_libraries(gtest_example Eigen3::Eigen) # you can link targets from the {NAME}_add_test functions
+# target_link_libraries(gtest_example PRIVATE Eigen3::Eigen) # you can link targets from the {NAME}_add_test functions. But they need to be PUBLIC|PRIVATE|INTERFACE.

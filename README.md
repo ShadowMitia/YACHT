@@ -30,23 +30,32 @@ The folders are arranged in the following way (following the [pitchfork template
 * **./src/**: The sources and includes for the code.
 * **./tests/**: The sources and includes for the tests.
 
+### Recommended troubleshooting tools
+* [valgrind](https://valgrind.org/)
+* [rr](https://rr-project.org/)
+* gdb (with [pwndbg](https://github.com/pwndbg/pwndbg) or [gef](https://gef.readthedocs.io/en/master/))
+
 ### Dev Readme:
 
 Be advised:
 The docker container in this template is not secure due to the use of volumes, etc...
 It is intended to be used as a cleanroom environment, to make sure it works in well known and defined environment.
 
+#### Tools for code checking:
 This template also has `clang-tidy`, `cppcheck`, `include-what-you-use`, & `clang-format` scripts and configs.
 If you wish to use them, you can enable `clang-tidy`, `cppcheck`, & `include-what-you-use` in the `./Config.cmake` file in the root directory, but they will only work if they are installed on your machine (otherwise, a warning will be emitted). A word of caution, enabling or disabling these features might cause CMake to recompile the entire project.
 `clang-format` however is used with the `./format.sh` script in the root directory, when executed it will run `clang-format` over all the files in the **./src/**, **./lib/**, & **./include/** directories, which will format them in place using the included format file `./.clang-format`.
 
+#### Package managers:
 If you wish to use the [Conan package manager](https://conan.io/center/) with this template, you need to have python installed with pip (`apt-get install python3 python3-pip` in ubuntu, or from [the python website](https://www.python.org/) for windows and set 'add python to PATH' during the installation), and then run `pip3 install conan` in your terminal.
 In addition vcpkg is available and is compatible with Conan. You will need to [install vcpkg manually](https://vcpkg.io/en/getting-started.html), then set the install directory in by setting `VCPKG_LOCATION` in `./Config.cmake` (RECOMMENDED), or you can let cmake download into build folder by setting `VCPKG_LOCAL_DOWNLOAD` to `ON` in `./Config.cmake` (slower than preinstalling, needs zip in linux and git in linux and windows).
 
+#### Testing:
 For tests, you can use the included `Catch2` and/or `GTest` library interfaces. For this you can modify `CMakeLists.txt` to add you test sources to the desired testing library. The tests can be compiled and run using the make target `run_test` (or `./build.sh test`). If you do not have `Catch2` and/or `GTest` installed (either using a package manager, or on your machine), you can set the flag `{NAME}_DOWNLOAD_IF_MISSING`, which lets the builder download a local version of the library.
 
-To use [AFL](https://github.com/google/AFL)/[AFL++](https://github.com/AFLplusplus/AFLplusplus) fuzzing, you will need to change the compiler in `unix_compile.config` to `/path/to/afl-cc` and `/path/to/afl-c++`. Then you can follow the [AFL instructions here](https://github.com/AFLplusplus/AFLplusplus#quick-start-fuzzing-with-afl) in order to fuzz with AFL.
-Fuzzing with [LLVM's libfuzz](https://llvm.org/docs/LibFuzzer.html) requires `Clang>=6.0.0` but is easier to use. For this you can modify `CMakeLists.txt` to add you test fuzzing sources to the `libfuzz_add_test` function call.
+#### Fuzzing:
+To use [AFL](https://github.com/google/AFL)/[AFL++](https://github.com/AFLplusplus/AFLplusplus) (Unix and MacOS only) fuzzing, you will need to change the compiler in `unix_compile.config` to `/path/to/afl-cc` and `/path/to/afl-c++`. Then you can follow the [AFL instructions here](https://github.com/AFLplusplus/AFLplusplus#quick-start-fuzzing-with-afl) in order to fuzz with AFL.
+Fuzzing with [LLVM's libfuzz](https://llvm.org/docs/LibFuzzer.html) requires `Clang>=6.0.0` but is easier to use with YATCH. For this you can modify `CMakeLists.txt` to add you test fuzzing sources to the `libfuzz_add_test` function call.
 Both approaches have pros and cons. A significant difference between them is AFL uses stdin and files to fuzz, where as libfuzz uses `uint_8` arrays to fuzz (as show in `tests\fuzz_examples\libfuzz_example.cpp`).
 
 GL&HF.

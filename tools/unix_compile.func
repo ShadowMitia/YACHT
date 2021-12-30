@@ -7,7 +7,7 @@ compile() {
 
     target_arg=""
     if [ -n "$2" ]; then
-        target_arg="--target target_name"
+        target_arg="--target ${target_name}"
     fi
 
     # define build_path, but append Docker_ if it is run in a docker container
@@ -55,10 +55,14 @@ compile() {
     run_tests=""
     if [ "$target_name" == "test" ]; then
         target_name="build_tests"
+        target_arg=""
         run_tests="echo && echo '=========== Tests ============' &&  ${builder} run_tests"
     fi
+    cmake_cov_flag=""
     if [ "$target_name" == "coverage" ]; then
         target_name="build_tests all"
+        target_arg=""
+        cmake_cov_flag="-DCOVERAGE_FLAGS=ON"
         run_tests="echo && echo '========= ${builder} tests =========' &&  ${builder} run_coverage"
     fi
 
@@ -70,7 +74,7 @@ compile() {
     source_dir=$(pwd)
     pushd "${build_path}" &>/dev/null || exit 1
     echo "=========== CMake ==========="
-    CC="${c_compiler}" CXX="${cpp_compiler}" cmake "${cmake_builder_flag}"  "${target_arg}" -D CMAKE_BUILD_TYPE="${build_type}" "${source_dir}" && \
+    CC="${c_compiler}" CXX="${cpp_compiler}" cmake "${cmake_builder_flag}"  "${target_arg}" "${cmake_cov_flag}" -D CMAKE_BUILD_TYPE="${build_type}" "${source_dir}" && \
     echo && \
     echo "=========== ${builder} ============" && \
     ${builder} -j"${n_jobs}" ${target_name} && eval "${run_tests}"

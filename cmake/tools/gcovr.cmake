@@ -1,6 +1,6 @@
-option(GCOVR "use gcovr for code coverage, if available" OFF)
+option(GCOVR "use gcovr for code coverage (not compatible MSVC), if available" OFF)
 
-if (GCOVR)
+if (GCOVR AND (NOT MSVC))
     find_program(GCOVR_EXEC "gcovr")
     if(GCOVR_EXEC)
         message(STATUS "Using gcovr")

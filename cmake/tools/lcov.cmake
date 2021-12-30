@@ -1,6 +1,6 @@
-option(LCOV "use lcov for code coverage, if available" OFF)
+option(LCOV "use lcov for code coverage (not compatible MSVC), if available" OFF)
 
-if (LCOV)
+if (LCOV AND (NOT MSVC))
     find_program(LCOV_EXEC "lcov")
     find_program(GENHTML_EXEC "genhtml")
     if(LCOV_EXEC AND GENHTML_EXEC)

@@ -11,11 +11,7 @@ macro(catch2_find)
         if (CATCH2_DOWNLOAD_IF_MISSING)
             set(find_catch2_cond "QUIET")
         endif()
-
-        find_package(Catch2 CONFIG QUIET)
-        if(NOT Catch2_FOUND)
-            find_package(Catch2 ${find_catch2_cond})
-        endif()
+        find_package(Catch2 ${find_catch2_cond} HINTS ${CMAKE_BINARY_DIR})
 
         set(catch2_v3 OFF)
         if(Catch2_VERSION_MAJOR GREATER 2)

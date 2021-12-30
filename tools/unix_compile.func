@@ -57,6 +57,10 @@ compile() {
         target_name="build_tests"
         run_tests="echo && echo '=========== Tests ============' &&  ${builder} run_tests"
     fi
+    if [ "$target_name" == "coverage" ]; then
+        target_name="build_tests all"
+        run_tests="echo && echo '========= ${builder} tests =========' &&  ${builder} run_coverage"
+    fi
 
     echo "============================="
     echo "building ${build_type} target"

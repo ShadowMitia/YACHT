@@ -19,6 +19,9 @@ set_option(GTEST_DOWNLOAD_IF_MISSING OFF)
 # Enable Catch2 testing platform.
 set_option(CATCH2_DOWNLOAD_IF_MISSING OFF)
 
+# Enable gcovr for code coverage, if available.
+set_option(GCOVR OFF)
+
 # Use Conan package manager
 set_option(CONAN_VERBOSE OFF)
 

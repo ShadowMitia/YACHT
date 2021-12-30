@@ -82,8 +82,10 @@ macro(conan_get_from_file)
                                             SETTINGS ${settings}
                                             ${is_quiet})
 
-    include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-    conan_basic_setup(TARGETS NO_OUTPUT_DIRS)
+    if(EXISTS "${CMAKE_BINARY_DIR}/conanbuildinfo.cmake")
+        include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+        conan_basic_setup(TARGETS NO_OUTPUT_DIRS)
+    endif()
 endmacro()
 
 macro(conan_get_package)

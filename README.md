@@ -59,12 +59,8 @@ Fuzzing with [LLVM's libfuzz](https://llvm.org/docs/LibFuzzer.html) requires `Cl
 Both approaches have pros and cons. A significant difference between them is AFL uses stdin and files to fuzz, where as libfuzz uses `uint_8` arrays to fuzz (as show in `tests\fuzz_examples\libfuzz_example.cpp`).
 
 #### Code coverage:
-In Unix/MacOS, you can use [gcovr](https://github.com/google/AFL) or [lcov](https://github.com/AFLplusplus/AFLplusplus) for
-
-
-, you will need to change the compiler in `unix_compile.config` to `/path/to/afl-cc` and `/path/to/afl-c++`. Then you can follow the [AFL instructions here](https://github.com/AFLplusplus/AFLplusplus#quick-start-fuzzing-with-afl) in order to fuzz with AFL.
-Fuzzing with [LLVM's libfuzz](https://llvm.org/docs/LibFuzzer.html) requires `Clang>=6.0.0` but is easier to use with YATCH. For this you can modify `CMakeLists.txt` to add you test fuzzing sources to the `libfuzz_add_test` function call.
-Both approaches have pros and cons. A significant difference between them is AFL uses stdin and files to fuzz, where as libfuzz uses `uint_8` arrays to fuzz (as show in `tests\fuzz_examples\libfuzz_example.cpp`).
+In Unix/MacOS, you can use [gcovr](https://gcovr.com/en/stable/) or [lcov](https://github.com/linux-test-project/lcov) for code coverage. Once installed, simply enable either (or both) of them in your `./Config.cmake` file. This will generate a folder with html file in your build directory where a full report of code coverage can be seen.
+For windows, if `mingw` or a similar method is used, you can use gcovr or lcov. If visual studio is used, we recommend OpenCppCoverage plugin for visual studio, as it will be much simpler and nicer to use.
 
 GL&HF.
 

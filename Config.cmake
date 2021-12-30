@@ -22,6 +22,9 @@ set_option(CATCH2_DOWNLOAD_IF_MISSING OFF)
 # Enable gcovr for code coverage, if available.
 set_option(GCOVR OFF)
 
+# Enable lcov for code coverage, if available.
+set_option(LCOV OFF)
+
 # Use Conan package manager
 set_option(CONAN_VERBOSE OFF)
 

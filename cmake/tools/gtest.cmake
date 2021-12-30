@@ -10,14 +10,10 @@ macro(gtest_find)
         if (GTEST_DOWNLOAD_IF_MISSING)
             set(find_gtest_cond "QUIET")
         endif()
-
-        find_package(GTest CONFIG QUIET)
-        if(NOT GTEST_FOUND)
-            find_package(GTest ${find_gtest_cond})
-        endif()
+        find_package(GTest ${find_gtest_cond} HINTS ${CMAKE_BINARY_DIR})
 
         # if we can't find it with find_package, then we download a known version and populate it if the user has set GTEST_DOWNLOAD_IF_MISSING
-        if(NOT GTEST_FOUND)
+        if(NOT GTest_FOUND)
             message(STATUS "Could not find an existing build of google Gtest. Downloading & building sources...")
 
             Include(FetchContent)
@@ -32,8 +28,8 @@ macro(gtest_find)
             FetchContent_MakeAvailable(googletest)
 
             # Alias the target names, as an installed Gtest lib is not named the same way as a subdir Gtest lib...
-            add_library(GTest::GTest ALIAS gtest)
-            add_library(GTest::Main ALIAS gtest_main)
+            add_library(GTest::gtest ALIAS gtest)
+            add_library(GTest::gtest_main ALIAS gtest_main)
             add_library(GTest::gmock ALIAS gmock)
             add_library(GTest::gmock_main ALIAS gmock_main)
 
@@ -59,7 +55,7 @@ macro(gtest_add_test)
     gtest_find()
 
     # add GTest main if the user has not requested NO_MAIN
-    set(lib_main_gtest "GTest::Main;GTest::gmock_main")
+    set(lib_main_gtest "GTest::gtest_main;GTest::gmock_main")
     if (GTEST_ADD_TEST_NO_MAIN)
         set(lib_main_gtest "")
     endif()
@@ -67,6 +63,6 @@ macro(gtest_add_test)
     message(STATUS "Added Gtest test: ${GTEST_ADD_TEST_NAME}")
     add_executable(${GTEST_ADD_TEST_NAME} EXCLUDE_FROM_ALL ${GTEST_ADD_TEST_SOURCES})
     add_dependencies(build_tests ${GTEST_ADD_TEST_NAME})
-    target_link_libraries(${GTEST_ADD_TEST_NAME} GTest::GTest GTest::gmock ${lib_main_gtest})
+    target_link_libraries(${GTEST_ADD_TEST_NAME} GTest::gtest GTest::gmock ${lib_main_gtest})
     add_test(${GTEST_ADD_TEST_NAME} ${GTEST_ADD_TEST_NAME} --gtest_color=yes)
 endmacro()

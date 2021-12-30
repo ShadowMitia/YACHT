@@ -38,23 +38,6 @@ compile() {
         n_jobs="$max_jobs"
     fi
 
-    # if a compiler has been defined, use the given compiler. Otherwise let CMake decide.
-    c_compilation_flag=""
-    if [ -n "$c_compiler" ]; then
-        if ! hash "$c_compiler" 2>/dev/null; then
-            echo "ERROR: the requested C compiler $c_compiler was not found. Halting..."
-            exit 1
-        fi
-        c_compilation_flag="-D CMAKE_C_COMPILER=$c_compiler"
-    fi
-    cpp_compilation_flag=""
-    if [ -n "$cpp_compiler" ]; then
-        if ! hash "$cpp_compiler" 2>/dev/null; then
-            echo "ERROR: the requested C++ compiler $cpp_compiler was not found. Halting..."
-            exit 1
-        fi
-        cpp_compilation_flag="-D CMAKE_CXX_COMPILER=$cpp_compiler"
-    fi
     builder="make"
     cmake_builder_flag=""
     if [ -n "$build_system" ]; then
@@ -74,6 +57,10 @@ compile() {
         target_name="build_tests"
         run_tests="echo && echo '=========== Tests ============' &&  ${builder} run_tests"
     fi
+    if [ "$target_name" == "coverage" ]; then
+        target_name="build_tests all"
+        run_tests="echo && echo '========= ${builder} tests =========' &&  ${builder} run_coverage"
+    fi
 
     echo "============================="
     echo "building ${build_type} target"
@@ -83,7 +70,7 @@ compile() {
     source_dir=$(pwd)
     pushd "${build_path}" &>/dev/null || exit 1
     echo "=========== CMake ==========="
-    cmake "${cmake_builder_flag}" "${c_compilation_flag}" "${cpp_compilation_flag}" "${target_arg}" -D CMAKE_BUILD_TYPE="${build_type}" "${source_dir}" && \
+    CC="${c_compiler}" CXX="${cpp_compiler}" cmake "${cmake_builder_flag}"  "${target_arg}" -D CMAKE_BUILD_TYPE="${build_type}" "${source_dir}" && \
     echo && \
     echo "=========== ${builder} ============" && \
     ${builder} -j"${n_jobs}" ${target_name} && eval "${run_tests}"

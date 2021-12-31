@@ -60,7 +60,7 @@ Both approaches have pros and cons. A significant difference between them is AFL
 
 #### Code coverage:
 In Unix/MacOS, you can use [gcovr](https://gcovr.com/en/stable/) or [lcov](https://github.com/linux-test-project/lcov) for code coverage. Once installed (`pip3 install gcovr` and `sudo apt install lcov` respectively), simply enable either (or both) of them in your `./Config.cmake` file. This will generate a folder with html file in your build directory where a full report of code coverage can be seen.
-For windows, if `mingw` or a similar method is used, you can use gcovr or lcov. If visual studio is used, we recommend OpenCppCoverage plugin for visual studio, as it will be much simpler and nicer to use.
+For windows, if `mingw` or a similar method is used, you can use gcovr or lcov. If visual studio is used, we recommend OpenCppCoverage plugin for visual studio, as it will be much simpler and nicer to use. In order to build and run the tests with gcovr or lcov, run the build script with `coverage` as target (E.G. `./build.sh -d coverage`).
 
 GL&HF.
 

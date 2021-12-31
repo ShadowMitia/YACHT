@@ -1,4 +1,4 @@
-function(libfuzz_check)
+macro(libfuzz_check)
     if (NOT libfuzz_cheched)
         message(STATUS "Libfuzz was requested. Setting up...")
         enable_testing()
@@ -18,7 +18,7 @@ function(libfuzz_check)
 
         set(libfuzz_valid ON)
     endif()
-endfunction()
+endmacro()
 
 macro(libfuzz_add_test)
     set(oneValueArgs NAME)

@@ -13,11 +13,14 @@ set_option(INCLUDE_WHAT_YOU_USE OFF)
 # Enable Ccache, if available.
 set_option(CCACHE OFF)
 
-# Enable google Gtest testing platform.
+# Enable google Gtest autodownload if missing.
 set_option(GTEST_DOWNLOAD_IF_MISSING OFF)
 
-# Enable Catch2 testing platform.
+# Enable Catch2 autodownload if missing.
 set_option(CATCH2_DOWNLOAD_IF_MISSING OFF)
+
+# Enable Google benchmark autodownload if missing.
+set_option(GOOLE_BENCHMARK_DOWNLOAD_IF_MISSING OFF)
 
 # Enable gcovr for code coverage (not compatible MSVC), if available.
 set_option(GCOVR OFF)

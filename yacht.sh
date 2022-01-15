@@ -88,9 +88,6 @@ compile() {
   fi
 }
 
-
-
-
 build_type=RelWithDebInfo
 be_verbose="false"
 do_format="false"
@@ -98,9 +95,9 @@ do_format="false"
 while test $# -gt 0; do
   case "$1" in
   -h | --help)
-    echo "build.sh - Builds the source with cmake and make."
+    echo "yacht.sh - Builds the source with cmake and make."
     echo " "
-    echo "./build.sh [-h|--help] [-r|--release] [-d|--debug] [-c|--clean] TARGET"
+    echo "./yacht.sh [-h|--help] [-r|--release] [-d|--debug] [-c|--clean] TARGET"
     echo " "
     echo "options:"
     echo "  -h, --help                show brief help"
@@ -108,6 +105,7 @@ while test $# -gt 0; do
     echo "  -d, --debug               use the Debug build type      (mutually exclusive with -r,--release,-m, and --minsizerel)"
     echo "  -m, --minsizerel          use the MinSizeRel build type (mutually exclusive with -r,--release,-d, and --debug)"
     echo "  -c, --clean               cleans the build directory before compiling"
+    echo "  -f, --format              call clang-format on the whole project"
     echo "  TARGET                    specify a compile target"
     echo "  -v, --verbose             use verbose output"
     echo " "
@@ -151,8 +149,6 @@ if [ -n "$clean" ]; then
   echo " "
 fi
 
-compile ${build_type} "${target}"
-
 if [ "$do_format" = "true" ]; then
 
   format_command="clang-format -i -style=file %"
@@ -183,5 +179,5 @@ if [ "$do_format" = "true" ]; then
         xargs -I % sh -c "${format_command}"
     fi
   done
-
 fi
+compile ${build_type} "${target}"

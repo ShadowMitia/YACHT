@@ -7,13 +7,12 @@ project(Cpp_base_project
     LANGUAGES CXX C)
 set(CMAKE_CXX_STANDARD 11)
 
-### TOOLS ###
-include(${PROJECT_SOURCE_DIR}/cmake/load_config.cmake)
-include(${PROJECT_SOURCE_DIR}/cmake/load_tools.cmake)
+### Load YACHT ###
+include(${PROJECT_SOURCE_DIR}/cmake/yacht.cmake) # will containe most default flags
 # add_compile_commands_json()
 
 ### COMPILER FLAG MANAGER ###
-include(${PROJECT_SOURCE_DIR}/cmake/flags.cmake) # will containe most default flags
+
 # customizable flags for each build and compiler.
 # set_flag(COMPILER clang gnu intel TARGET release relwithdebinfo FLAGS -O3 -march=native)
 # set_flag(COMPILER clang gnu intel FLAGS -fexceptions -fopenmp)

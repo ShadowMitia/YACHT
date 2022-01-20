@@ -1,7 +1,9 @@
 #!/bin/bash
 
 compile() {
-  source unix_compile.config
+  if [ -f unix_compile.config ]; then
+    source unix_compile.config
+  fi
   build_type=$1 # Debug or Release
   target_name=$2
 

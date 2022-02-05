@@ -5,7 +5,7 @@ macro(catch2_find)
         message(STATUS "Catch2 was requested. Setting up...")
 
         enable_testing()
-        include(${PROJECT_SOURCE_DIR}/cmake/tools/test_helper.cmake)
+        include(${PROJECT_SOURCE_DIR}/cmake/YACHT/tools/test_helper.cmake)
 
         set(find_catch2_cond "REQUIRED")
         if (CATCH2_DOWNLOAD_IF_MISSING)

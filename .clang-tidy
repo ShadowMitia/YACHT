@@ -2,5 +2,5 @@
 # Enable all checks by default, and remove all project specific ones
 # You might want to add/remove other checks depending on your project
 # Also disables some stylistic checks by default to make things simpler
-Checks: '*,-llvm*,-fuchsia*,-google*,-abseil*,-zircon,-modernize-use-trailing-return-type'
+Checks: '*,-llvm*,-fuchsia*,-google*,-abseil*,-zircon*,-altera*,-modernize-use-trailing-return-type'
 ...
